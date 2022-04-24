@@ -7,7 +7,7 @@
  *
  * @package Coloapedia
  */
-  
+
 $post_id = get_the_ID();
 
 // $x =   add_post_meta( $post_id, 'wpc_post_views' , 0 ) ;   //add post meta
@@ -19,6 +19,7 @@ $visit_count = ((int)($post_meta['wpc_post_views'][0])) + 1;
 
 update_post_meta($post_id, 'wpc_post_views', $visit_count); //update post meta
 
+$link = get_permalink($post_id);
 get_header();
 
 if (have_posts()) :
@@ -60,22 +61,18 @@ if (have_posts()) :
 									<small><a href="#" title=""><i class="fa fa-eye"></i> <?php echo $visit_count; ?></a></small>
 								</div><!-- end meta -->
 
-								<div class="post-sharing">
-									<ul class="list-inline">
 
-										<?php
-										$link = get_permalink($post_id);
-										?>
-										<li><a target="__blank" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $link; ?>" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
-										<li><a target="__blank" href="https://twitter.com/intent/tweet?url=<?php echo $link; ?>" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
-									</ul>
-								</div><!-- end post-sharing -->
+								<!-- get share section in template parts -->
+								<?php get_template_part('template-parts/single-share', null, ['post_link' => $link]); ?>
+								<!-- get share section in template parts -->
+
+
 							</div><!-- end title -->
-                           <?php if(has_post_thumbnail( $post->ID )) : ?>
-							<div class="single-post-media">
-								<?php the_post_thumbnail(); ?>
-							</div><!-- end media -->
-                            <?php endif ; ?>
+							<?php if (has_post_thumbnail($post->ID)) : ?>
+								<div class="single-post-media">
+									<?php the_post_thumbnail(); ?>
+								</div><!-- end media -->
+							<?php endif; ?>
 							<div class="blog-content">
 								<?php the_content(); ?>
 							</div><!-- end content -->
@@ -92,13 +89,11 @@ if (have_posts()) :
 
 								</div><!-- end meta -->
 
-								<div class="post-sharing">
-									<ul class="list-inline">
-										<li><a href="#" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
-										<li><a href="#" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
-										<li><a href="#" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
-									</ul>
-								</div><!-- end post-sharing -->
+								<!-- get share section in template parts -->
+								<?php get_template_part('template-parts/single-share', null, ['post_link' => $link]); ?>
+								<!-- get share section in template parts -->
+
+
 							</div><!-- end title -->
 
 							<div class="row">
@@ -119,35 +114,35 @@ if (have_posts()) :
 							<div class="custombox prevnextpost clearfix">
 								<div class="row">
 									<div class="col-lg-6">
-										<?php if(is_object($previous_post)) : ?>
-										<div class="blog-list-widget">
-											<div class="list-group">
-												<a href="<?php echo get_permalink($previous_post->ID) ?>" class="list-group-item list-group-item-action flex-column align-items-start">
-													<div class="w-100 justify-content-between text-right">
-														<?php echo get_the_post_thumbnail($previous_post); ?>
-														<h5 class="mb-1"><?php echo $previous_post->post_title; ?></h5>
-														<small>Prev Post</small>
-													</div>
-												</a>
+										<?php if (is_object($previous_post)) : ?>
+											<div class="blog-list-widget">
+												<div class="list-group">
+													<a href="<?php echo get_permalink($previous_post->ID) ?>" class="list-group-item list-group-item-action flex-column align-items-start">
+														<div class="w-100 justify-content-between text-right">
+															<?php echo get_the_post_thumbnail($previous_post); ?>
+															<h5 class="mb-1"><?php echo $previous_post->post_title; ?></h5>
+															<small>Prev Post</small>
+														</div>
+													</a>
+												</div>
 											</div>
-										</div>
 										<?php endif ?>
 									</div><!-- end col -->
 
 									<div class="col-lg-6">
-									<?php if(is_object($next_post)) : ?>
-										<div class="blog-list-widget">
-											<div class="list-group">
-												<a href="<?php echo get_permalink($next_post) ?>" class="list-group-item list-group-item-action flex-column align-items-start">
-													<div class="w-100 justify-content-between">
-														<?php echo get_the_post_thumbnail($next_post) ?>
-														<h5 class="mb-1"><?php echo $next_post->post_title; ?></h5>
-														<small>Next Post</small>
-													</div>
-												</a>
+										<?php if (is_object($next_post)) : ?>
+											<div class="blog-list-widget">
+												<div class="list-group">
+													<a href="<?php echo get_permalink($next_post) ?>" class="list-group-item list-group-item-action flex-column align-items-start">
+														<div class="w-100 justify-content-between">
+															<?php echo get_the_post_thumbnail($next_post) ?>
+															<h5 class="mb-1"><?php echo $next_post->post_title; ?></h5>
+															<small>Next Post</small>
+														</div>
+													</a>
+												</div>
 											</div>
-										</div>
-										<?php endif ; ?>
+										<?php endif; ?>
 									</div><!-- end col -->
 								</div><!-- end row -->
 							</div><!-- end author-box -->
@@ -287,90 +282,12 @@ if (have_posts()) :
 						</div><!-- end page-wrapper -->
 					</div><!-- end col -->
 
-					<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-						<div class="sidebar">
-							<div class="widget">
-								<h2 class="widget-title">Search</h2>
-								<form class="form-inline search-form">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Search on the site">
-									</div>
-									<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-								</form>
-							</div><!-- end widget -->
+					<!-- sidebar -->
+                      <?php get_sidebar(  )?>
+					<!-- sidebar -->
 
-							<div class="widget">
-								<h2 class="widget-title">Recent Posts</h2>
-								<div class="blog-list-widget">
-									<div class="list-group">
-										<a href="single.html" class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 justify-content-between">
-												<img src="upload/blog_square_01.jpg" alt="" class="img-fluid float-left">
-												<h5 class="mb-1">5 Beautiful buildings you need to before dying</h5>
-												<small>12 Jan, 2016</small>
-											</div>
-										</a>
 
-										<a href="single.html" class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 justify-content-between">
-												<img src="upload/blog_square_02.jpg" alt="" class="img-fluid float-left">
-												<h5 class="mb-1">Let's make an introduction for creative life</h5>
-												<small>11 Jan, 2016</small>
-											</div>
-										</a>
-
-										<a href="single.html" class="list-group-item list-group-item-action flex-column align-items-start">
-											<div class="w-100 last-item justify-content-between">
-												<img src="upload/blog_square_03.jpg" alt="" class="img-fluid float-left">
-												<h5 class="mb-1">Did you see the most beautiful sea in the world?</h5>
-												<small>07 Jan, 2016</small>
-											</div>
-										</a>
-									</div>
-								</div><!-- end blog-list -->
-							</div><!-- end widget -->
-
-							<div class="widget">
-								<h2 class="widget-title">Advertising</h2>
-								<div class="banner-spot clearfix">
-									<div class="banner-img">
-										<img src="upload/banner_03.jpg" alt="" class="img-fluid">
-									</div><!-- end banner-img -->
-								</div><!-- end banner -->
-							</div><!-- end widget -->
-
-							<div class="widget">
-								<h2 class="widget-title">Instagram Feed</h2>
-								<div class="instagram-wrapper clearfix">
-									<a class="" href="#"><img src="upload/insta_01.jpeg" alt="" class="img-fluid"></a>
-									<a href="#"><img src="upload/insta_02.jpeg" alt="" class="img-fluid"></a>
-									<a href="#"><img src="upload/insta_03.jpeg" alt="" class="img-fluid"></a>
-									<a href="#"><img src="upload/insta_04.jpeg" alt="" class="img-fluid"></a>
-									<a href="#"><img src="upload/insta_05.jpeg" alt="" class="img-fluid"></a>
-									<a href="#"><img src="upload/insta_06.jpeg" alt="" class="img-fluid"></a>
-									<a href="#"><img src="upload/insta_07.jpeg" alt="" class="img-fluid"></a>
-									<a href="#"><img src="upload/insta_08.jpeg" alt="" class="img-fluid"></a>
-									<a href="#"><img src="upload/insta_09.jpeg" alt="" class="img-fluid"></a>
-								</div><!-- end Instagram wrapper -->
-							</div><!-- end widget -->
-
-							<div class="widget">
-								<h2 class="widget-title">Popular Categories</h2>
-								<div class="link-widget">
-									<ul>
-										<li><a href="#">Fahsion <span>(21)</span></a></li>
-										<li><a href="#">Lifestyle <span>(15)</span></a></li>
-										<li><a href="#">Art & Design <span>(31)</span></a></li>
-										<li><a href="#">Health Beauty <span>(22)</span></a></li>
-										<li><a href="#">Clothing <span>(66)</span></a></li>
-										<li><a href="#">Entertaintment <span>(11)</span></a></li>
-										<li><a href="#">Food & Drink <span>(87)</span></a></li>
-									</ul>
-								</div><!-- end link-widget -->
-							</div><!-- end widget -->
-
-						</div><!-- end sidebar -->
-					</div><!-- end col -->
+				
 				</div><!-- end row -->
 			</div><!-- end container -->
 		</section>

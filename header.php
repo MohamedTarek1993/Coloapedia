@@ -78,11 +78,18 @@
 
                     <div class="col-lg-4 hidden-md-down">
                         <div class="topmenu text-center">
-                            <ul class="list-inline">
-                                <li class="list-inline-item"><a href="blog-category-01.html"><i class="fa fa-star"></i> Trends</a></li>
-                                <li class="list-inline-item"><a href="blog-category-02.html"><i class="fa fa-bolt"></i> Hot Topics</a></li>
-                                <li class="list-inline-item"><a href="page-contact.html"><i class="fa fa-user-circle-o"></i> Write for us</a></li>
-                            </ul><!-- end ul -->
+
+                            <!-- top menu  -->
+                            <?php wp_nav_menu([
+                                'theme_location' => 'top-menu',
+                                'container' =>  '',
+                                'menu_class'  => 'list-inline',
+                                'walker'    => new Wpc_Top_Menu_Walker,
+
+                            ]);  ?>
+                            <!-- top menu  -->
+
+                            
                         </div><!-- end topmenu -->
                     </div><!-- end col -->
 

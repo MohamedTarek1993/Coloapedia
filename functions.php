@@ -49,11 +49,17 @@ function theme_for_blog_setup() {
 	add_theme_support( 'post-thumbnails' );
 
 	// This theme uses wp_nav_menu() in one location.
+
+
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'theme-for-blog' ),
+			'top-menu'    => 'Top Menu',
+			'main-menu'   => 'Main Menu',
 		)
 	);
+	require get_template_directory(  ) . '/inc/walkers/walkers.php';
+
+	add_theme_support( 'menus' );
 
 	/*
 		* Switch default core markup for search form, comment form, and comments
@@ -119,23 +125,9 @@ add_action( 'after_setup_theme', 'theme_for_blog_content_width', 0 );
 
 /**
  * Register widget area.
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ * Register side bar . 
  */
-function theme_for_blog_widgets_init() {
-	register_sidebar(
-		array(
-			'name'          => esc_html__( 'Sidebar', 'theme-for-blog' ),
-			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'theme-for-blog' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
-}
-add_action( 'widgets_init', 'theme_for_blog_widgets_init' );
+require get_template_directory() . '/inc/widgets/widgets.php' ;
 
 /**
  * Enqueue scripts and styles.
@@ -199,4 +191,9 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * remove block editor from widgets
+ */
+remove_theme_support('widgets-block-editor');
 

@@ -245,7 +245,7 @@ a {
 .topbar-section a:hover {
     color: rgba(0, 0, 0, 1) !important;
 }
-
+.topbar-section #menu-top-menu,
 .topbar-section .list-inline {
     margin: 0;
     padding: 0;
@@ -254,7 +254,7 @@ a {
 .topbar-section .tooltip-inner {
     margin-top: 10px !important;
 }
-
+.topbar-section .menu-item,
 .topbar-section .list-inline-item {
     padding: 0 0.4rem !important;
 }
