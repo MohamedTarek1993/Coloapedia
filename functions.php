@@ -101,8 +101,8 @@ function theme_for_blog_setup() {
 	add_theme_support(
 		'custom-logo',
 		array(
-			'height'      => 250,
-			'width'       => 250,
+			'height'      => 100,
+			'width'       => 300,
 			'flex-width'  => true,
 			'flex-height' => true,
 		)

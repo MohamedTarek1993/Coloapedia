@@ -34,8 +34,12 @@
             <div class="col-lg-8 offset-lg-2">
                 <div class="widget">
                     <div class="footer-text text-center">
-                        <a href="index.html"><img src="images/flogo.png" alt="" class="img-fluid"></a>
-                        <p>Cloapedia is a personal blog for handcrafted, cameramade photography content, fashion styles from independent creatives around the world.</p>
+                    <?php
+                           if(has_custom_logo()){
+                               the_custom_logo(  );
+                           }
+                           ?>
+                        <p><?php echo get_theme_mod( 'footer_signature' , ''); ?></p>
                         <div class="social">
                             <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
                             <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
@@ -59,7 +63,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <br>
-                <div class="copyright">&copy; Cloapedia. Design: <a href="http://html.design">HTML Design</a>.</div>
+                <div class="copyright"> <?php echo get_theme_mod( 'footer_copy_rights' , ''); ?></div>
             </div>
         </div>
     </div><!-- end container -->
